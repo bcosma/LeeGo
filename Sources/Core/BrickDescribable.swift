@@ -17,7 +17,7 @@ protocol BrickDescribable: class, Configurable, Composable {
 
 extension BrickDescribable {
 
-    internal func apply<View>(_ newBrick: Brick, to view: View, with dataSource: BrickDataSource? = nil, updatingStrategy: UpdatingStrategy) where View: UIView, View: BrickDescribable {
+    internal func apply<View>(_ newBrick: Brick, to view: View, with dataSource: BrickDataSource? = nil, updatingStrategy: UpdatingStrategy) where View: UIView {
 
         if shouldRebuild(view.currentBrick, with: newBrick, updatingStrategy: updatingStrategy) {
             applyDiff(with: newBrick, to: view)
@@ -30,7 +30,7 @@ extension BrickDescribable {
 
 extension BrickDescribable {
     
-    fileprivate func applyDiff<View>(with newBrick: Brick, to view: View) where View: UIView, View: BrickDescribable {
+    fileprivate func applyDiff<View>(with newBrick: Brick, to view: View) where View: UIView {
 
         // setup self, only if brick is not initialized from a nib file
         if view.currentBrick?.nibName == nil {
@@ -64,7 +64,7 @@ extension BrickDescribable {
         return shouldRebuild
     }
 
-    private func applyDimension<View>(of newBrick: Brick, to brick: View) where View: UIView, View: BrickDescribable {
+    private func applyDimension<View>(of newBrick: Brick, to brick: View) where View: UIView {
         if let width = newBrick.width {
             brick.lg_applyConstraint(.width, constant: width)
         } else {

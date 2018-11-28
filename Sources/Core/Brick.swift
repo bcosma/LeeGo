@@ -398,7 +398,7 @@ extension Brick: JSONConvertible {
         }
 
         if let brickJsons: [JSONDictionary] = try? json.parse(JSONKey.bricks) {
-            self.childBricks = brickJsons.flatMap({ (json) -> Brick? in
+            self.childBricks = brickJsons.compactMap({ (json) -> Brick? in
                 return try? Brick(rawValue: json)
             })
         } else {
@@ -446,7 +446,7 @@ extension Brick: JSONConvertible {
         }
 
         if let bricks = self.childBricks {
-            let bricksJson = bricks.flatMap({ (brick) -> JSONDictionary? in
+            let bricksJson = bricks.compactMap({ (brick) -> JSONDictionary? in
                 return brick.encode()
             })
 

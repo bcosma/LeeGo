@@ -379,8 +379,8 @@ extension Appearance {
 
     fileprivate func asString() -> String {
       let strSelf = String(describing: self)
-        if let index = strSelf.characters.index(of: "(") {
-          return String(describing: self).substring(to: index)
+        if let index = strSelf.index(of: "(") {
+          return String(String(describing: self)[...index])
         }
         return strSelf
     }
@@ -412,7 +412,7 @@ extension Appearance: JSONConvertible {
     }
 
     internal static func JSONWithAppearances(_ appearances: [Appearance]) -> JSONDictionary {
-        return appearances.flatMap({
+        return appearances.compactMap({
             (appearance) -> JSONDictionary? in
             return appearance.encode()
         }).reduce([:], {

@@ -145,13 +145,12 @@ internal func formatHorizontal(_ brickNames: [String], axis: Axis, align: Alignm
                 return [H(orderedViews:left, right: .right(.greaterThanOrEqual))]
             } else {
                 let str = H(fromSuperview: false, orderedViews:right)
-                let index = str.characters.index(str.startIndex, offsetBy: 2)
-                return [H(orderedViews:left, toSuperview: false) + Metrics.spaceH(.greaterThanOrEqual).description + str.substring(from: index)]
+                let index = str.index(str.startIndex, offsetBy: 2)
+                return [H(orderedViews:left, toSuperview: false) + Metrics.spaceH(.greaterThanOrEqual).description + String(str[index...])]
             }
         }
     } else {
-        return brickNames.flatMap { (brick) -> String? in
-
+        return brickNames.compactMap { (brick) -> String? in
             switch align {
             case .left:
                 return H(orderedViews:[brick], right:.right(.greaterThanOrEqual))
@@ -176,7 +175,7 @@ internal func formatVertical(_ brickNames: [String], axis: Axis, align: Alignmen
     }
 
     if axis == .horizontal {
-        return brickNames.flatMap { (brick) -> String? in
+        return brickNames.compactMap { (brick) -> String? in
 
             switch align {
             case .top:
@@ -208,8 +207,8 @@ internal func formatVertical(_ brickNames: [String], axis: Axis, align: Alignmen
                 return [V(orderedViews: top, bottom: .bottom(.greaterThanOrEqual))]
             } else {
                 let str = V(fromSuperview: false, orderedViews:bottom)
-                let index = str.characters.index(str.startIndex, offsetBy: 2)
-                return [V(orderedViews: top, toSuperview: false) + Metrics.spaceV(.greaterThanOrEqual).description + str.substring(from: index)]
+                let index = str.index(str.startIndex, offsetBy: 2)
+                return [V(orderedViews: top, toSuperview: false) + Metrics.spaceV(.greaterThanOrEqual).description + String(str[index...])]
             }
         }
     }
@@ -236,7 +235,7 @@ private func equallyLayoutFormats(_ brickNames: [String], axis: Axis) -> [String
         return []
     }
 
-    return brickNames.enumerated().flatMap { (index: Int, element: String) -> String? in
+    return brickNames.enumerated().compactMap { (index: Int, element: String) -> String? in
         if index < brickNames.count - 1 {
             return "\(axis == .horizontal ? "H" : "V"):[\(element)(\(brickNames[index + 1]))]"
         }

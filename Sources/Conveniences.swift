@@ -127,7 +127,7 @@ extension UIView {
             return nil
         }
 
-		let attributedStrings = attributesArray.enumerated().flatMap({ (index, attribute) -> NSAttributedString? in
+		let attributedStrings = attributesArray.enumerated().compactMap({ (index, attribute) -> NSAttributedString? in
             if let idx = Int(String(index)) {
                 let text = texts[idx] ?? ""
 

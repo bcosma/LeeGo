@@ -37,7 +37,7 @@ extension NSLayoutFormatOptions: JSONConvertible {
     }
 
     init(rawValue options: [String]) {
-        self.init(options.flatMap { (option) -> NSLayoutFormatOptions? in
+        self.init(options.compactMap { (option) -> NSLayoutFormatOptions? in
             switch option {
             case JSONKey.alignAllLeft.asString:
                 return .alignAllLeft
@@ -175,7 +175,7 @@ extension UIControlState: JSONConvertible {
     }
 
     init(rawValue states: [String]) {
-        self.init(states.flatMap { (state) -> UIControlState? in
+        self.init(states.compactMap { (state) -> UIControlState? in
             switch state {
             case JSONKey.normal.asString:
                 return UIControlState()
@@ -263,7 +263,7 @@ extension UIDataDetectorTypes: JSONConvertible {
     }
 
     init(rawValue types: [String]) {
-        self.init(types.flatMap { (type) -> UIDataDetectorTypes? in
+        self.init(types.compactMap { (type) -> UIDataDetectorTypes? in
             switch type {
             case JSONKey.phoneNumber.asString:
                 return .phoneNumber
@@ -683,7 +683,7 @@ extension UIColor {
         var int = UInt32()
         Scanner(string: hex).scanHexInt32(&int)
         let r, g, b, a: UInt32
-        switch hex.characters.count {
+        switch hex.count {
         case 3: // RGB (12-bit)
             (r, g, b, a) = ((int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17, 255)
         case 6: // RGB (24-bit)
